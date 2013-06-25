@@ -1,0 +1,152 @@
+@(tasks: List[Task], got: Array[String], isimler: Array[String], sayi: Int, id: String, linkler: Array[Boolean])
+
+@import helper._
+
+@main("Pictures 1.0") {
+   <!DOCTYPE html>
+<html lang="en"> 
+<head>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" type="text/css" 
+                       href='@routes.Assets.at("stylesheets/bootstrap.css")'>
+<link rel="stylesheet" type="text/css" 
+                       href='@routes.Assets.at("stylesheets/bootstrap-responsive.css")'>
+                        <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+      . container-fluid {
+          /*padding-top: 60px;*/
+          margin-top: 60px;
+      }
+        . bokpsr {
+            /*padding-bottom: 60px;*/
+            /*margin-bottom: 60px;*/
+            background-color: #ccc;
+        }
+        .btn {
+        margin-top: 10px;
+        }
+        
+    </style>
+    </head>
+    <body>
+      <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">BWF-TR</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+    <div class="bokpsr">
+      
+        
+    <p></br><p>
+    </div>
+        <div class="container-fluid">
+        
+</div><!--/.fluid-container-->
+    <div class="container">
+<div class="row">
+      <!-- Main hero unit for a primary marketing message or call to action -->
+      <div class="span6">
+        <h1>Arkadaşlarına bakmaya başla</h1>
+        <p>Bunlar hep nasip kısmet işleri.<br> Haydi bileğine kuvvet.</p>
+        <p><a href="#" class="btn btn-primary btn-large">Nasıl Çalışıyor? &raquo;</a></p>
+      </div>
+      <div class="span6">
+        <h1>Arkadaşlarına bakmaya başla</h1>
+        <p>Bunlar hep nasip kısmet işleri.<br> Haydi bileğine kuvvet.</p>
+        <p><a href="#" class="btn btn-primary btn-large">Nasıl Çalışıyor? &raquo;</a></p>
+      </div>
+</div>
+      <!-- Example row of columns -->
+     
+      @for(b <- 0 to sayi) {
+      <div class="row">
+       @for(a <- 0 to 3) {
+           <div class="span3">
+          <h2 id="@got(a+b*4)1">@isimler(a+b*4)</h2>
+          <img src='http://graph.facebook.com/@got(a+b*4)/picture?type=large' alt="Smiley face" >
+          @if(linkler(a+b*4)) {
+          <p><a href="javascript:;" id="@got(a+b*4)" class="btn btn-primary ilike" data-para1="@got(a+b*4)" data-para2="@id">Seni seçtim &raquo;</a><p>
+        }
+        </div>
+        }
+      </div>
+      }
+
+     <script>
+
+     $(function(){
+         $('.ilike').click(function(){
+                           var $this = $(this);
+                           var p1 = $this.data('para1');
+                           var p2 = $this.data('para2');
+                           //alert(p2+" pic hamdi "+ p1);
+                           $.get('/get',
+                                   {yazilan: p1, yazan: p2},
+                                  function(data) {
+                                	   //
+                                    // window.alert(data);
+                                    // document.getElementById(p1).enabled=false;
+                                   //  document.getElementById(p1).className = "";
+                                   //  document.getElementById(p1).className = "btn btn-success";
+                                     document.getElementById(p1+"1").innerHTML="İstek alındı";
+                                    // document.getElementById(p1).onclick = "function {console.log('Uye kaydi.');}"
+                                     element = document.getElementById(p1);
+                                     element.parentNode.removeChild(element);
+                                  });
+                          
+                           });
+         });
+
+                </script>
+                <script>
+                function denemeget(bok)
+                {
+                	alert("pichamdi " + bok);
+                	$.get('/post',
+                			{id: '12345'},
+                    	      function(data) {
+                    	          window.alert(data);
+                    	      });
+                          
+                }
+                function pageReload() {
+                	window.location.replace('http://ec2-54-214-154-70.us-west-2.compute.amazonaws.com/bwftr/pick.html');
+                }
+                </script>
+            <p id="shuffle">URL Tavsiyesi gelecek buraya</p>
+            
+            <button type="button" class="btn btn-success" onclick="denemeget('bok')">Shuffle</button>
+            
+             <button type="button" class="btn btn-success" onclick="pageReload()">Page Reload</button>
+                  <footer>
+            <p></br></br></br>&copy; BWFTR 2013</p>
+        </footer>
+    </div> <!-- /container -->
+    
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src='@routes.Assets.at("javascripts/bootstrap.min.js")'></script>
+    </body>
+</html>
+
+}
+
+
